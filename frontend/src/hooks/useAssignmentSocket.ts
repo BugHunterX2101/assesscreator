@@ -12,7 +12,8 @@ export const useAssignmentSocket = (assignmentId: string | null) => {
     if (!assignmentId) return;
 
     const connect = () => {
-      const wsUrl = process.env.NEXT_PUBLIC_WS_URL || (typeof window !== 'undefined' ? `wss://${window.location.host}/ws` : 'ws://localhost:3001/ws');
+      const protocol = typeof window !== 'undefined' && window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = process.env.NEXT_PUBLIC_WS_URL || (typeof window !== 'undefined' ? `${protocol}//${window.location.host}/ws` : 'ws://localhost:3001/ws');
       ws.current = new WebSocket(`${wsUrl}?assignmentId=${assignmentId}`);
 
       ws.current.onopen = () => {
