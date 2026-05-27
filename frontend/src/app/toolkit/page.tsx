@@ -17,7 +17,7 @@ export default function ToolkitPage() {
           <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-lg">
             <Sparkles className="w-5 h-5 text-white" />
           </span>
-          <span>AI Teacher's Toolkit</span>
+          <span>AI Teacher&apos;s Toolkit</span>
         </h1>
         <p className="text-gray-500 text-lg">Supercharge your teaching workflow with AI-powered tools.</p>
       </div>

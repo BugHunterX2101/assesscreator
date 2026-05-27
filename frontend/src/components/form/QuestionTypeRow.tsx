@@ -7,7 +7,7 @@ interface QuestionTypeRowProps {
     count: number;
     marksEach: number;
   };
-  onChange: (index: number, field: string, value: any) => void;
+  onChange: (index: number, field: string, value: string | number) => void;
   onRemove: (index: number) => void;
 }
 

@@ -66,5 +66,5 @@ export const useAssignmentSocket = (assignmentId: string | null) => {
     };
   }, [assignmentId, retryCount, router, setJobStatus, setJobError, setWsConnected]);
 
-  return ws.current;
+  return null;
 };

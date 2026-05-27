@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Bell, ArrowLeft, ChevronDown } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
-import Image from 'next/image';
+
 
 export const Header = () => {
   const router = useRouter();

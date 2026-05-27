@@ -23,7 +23,7 @@ export const FormField: React.FC<FormFieldProps> = ({ label, error, as = 'input'
       </label>
       <div className="relative">
         {as === 'select' ? (
-          <select className={inputClasses} {...(props as any)}>
+          <select className={inputClasses} {...(props as React.SelectHTMLAttributes<HTMLSelectElement>)}>
             {options?.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
@@ -31,9 +31,9 @@ export const FormField: React.FC<FormFieldProps> = ({ label, error, as = 'input'
             ))}
           </select>
         ) : as === 'textarea' ? (
-          <textarea className={`${inputClasses} py-3 h-auto min-h-[100px]`} {...(props as any)} />
+          <textarea className={`${inputClasses} py-3 h-auto min-h-[100px]`} {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)} />
         ) : (
-          <input className={inputClasses} {...(props as any)} />
+          <input className={inputClasses} {...(props as React.InputHTMLAttributes<HTMLInputElement>)} />
         )}
       </div>
       {error && <p className="mt-1 text-sm text-red-600 font-medium">{error}</p>}

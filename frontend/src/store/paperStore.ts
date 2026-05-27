@@ -27,6 +27,6 @@ export const usePaperStore = create<PaperState>((set) => ({
   setPaper: (paper) => set({ paper }),
   setIsLoading: (isLoading) => set({ isLoading }),
   setError: (error) => set({ error }),
-  setStudentInfo: (field, value) => set((state) => ({ [field]: value })),
+  setStudentInfo: (field, value) => set(() => ({ [field]: value })),
   clearPaper: () => set({ paper: null, error: null, studentName: '', studentRollNo: '', studentSection: '' })
 }));

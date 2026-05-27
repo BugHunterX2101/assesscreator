@@ -23,8 +23,12 @@ export default function PaperPage({ params }: { params: Promise<{ id: string }> 
         const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
         const res = await axios.get(`${baseUrl}/api/assignments/${assignmentId}/paper`);
         setPaper(res.data.paper);
-      } catch (err: any) {
-        setError(err.response?.data?.error?.message || 'Failed to fetch paper');
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          setError(error.response?.data?.error?.message || 'Failed to fetch paper');
+        } else {
+          setError('Failed to fetch paper');
+        }
       } finally {
         setIsLoading(false);
       }

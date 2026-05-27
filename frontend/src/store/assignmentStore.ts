@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { AssignmentFormData, JobStatus, GeneratedPaper } from '@vedaai/shared';
+import { AssignmentFormData, JobStatus } from '@vedaai/shared';
 
 interface AssignmentState {
   form: AssignmentFormData;

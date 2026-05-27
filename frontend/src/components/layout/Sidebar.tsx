@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutGrid, Users, FileText, Sparkles, Clock, Settings, Plus } from 'lucide-react';
-import Image from 'next/image';
+import { LayoutGrid, Users, FileText, Sparkles, Clock, Settings } from 'lucide-react';
 
 const NAV_ITEMS = [
   { name: 'Home', href: '/', icon: LayoutGrid },

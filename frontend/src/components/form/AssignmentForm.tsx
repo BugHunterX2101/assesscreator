@@ -13,7 +13,7 @@ export const AssignmentForm: React.FC = () => {
   const { form, formErrors, updateForm, setFormError, clearFormErrors, setJobStatus, setCurrentAssignmentId, jobStatus } = useAssignmentStore();
   const router = useRouter();
 
-  const handleQuestionTypeChange = (index: number, field: string, value: any) => {
+  const handleQuestionTypeChange = (index: number, field: string, value: string | number) => {
     const newTypes = [...form.questionTypes];
     newTypes[index] = { ...newTypes[index], [field]: value };
     updateForm({ questionTypes: newTypes });
@@ -37,7 +37,7 @@ export const AssignmentForm: React.FC = () => {
     const validation = AssignmentFormSchema.safeParse(form);
     if (!validation.success) {
       validation.error.issues.forEach(issue => {
-        setFormError(issue.path[0] as any, issue.message);
+        setFormError(issue.path[0] as keyof typeof form, issue.message);
       });
       return;
     }
@@ -50,12 +50,16 @@ export const AssignmentForm: React.FC = () => {
       
       setCurrentAssignmentId(res.data.assignmentId);
       router.push(`/assignments/${res.data.assignmentId}/status`);
-    } catch (err: any) {
+    } catch (error) {
       setJobStatus('failed');
-      if (err.response?.data?.error?.details) {
-        // Handle server-side validation errors
+      if (axios.isAxiosError(error)) {
+        if (error.response?.data?.error?.details) {
+          // Handle server-side validation errors
+        } else {
+          alert(error.response?.data?.error?.message || 'Submission failed');
+        }
       } else {
-        alert(err.response?.data?.error?.message || 'Submission failed');
+        alert('Submission failed');
       }
     }
   };
@@ -177,7 +181,7 @@ export const AssignmentForm: React.FC = () => {
            <DifficultySlider
             difficulty={form.difficulty}
             onChange={(diff) => updateForm({ difficulty: diff })}
-            error={formErrors.difficulty as any}
+            error={formErrors.difficulty as string | undefined}
           />
         </div>
 

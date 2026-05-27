@@ -33,8 +33,12 @@ export const FileUploader: React.FC<Props> = ({ onUploadSuccess }) => {
       });
       setFileName(file.name);
       onUploadSuccess(res.data.fileKey);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Upload failed');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.error || 'Upload failed');
+      } else {
+        setError('Upload failed');
+      }
     } finally {
       setIsUploading(false);
     }
