@@ -76,6 +76,10 @@ export const startWorker = () => {
       await redis.setex(`paper:${assignmentId}`, 3600, JSON.stringify(validatedData));
 
       wsService.emitToAssignment(assignmentId, 'job:completed', { assignmentId });
+      wsService.emitGlobal('notification', {
+        type: 'success',
+        message: `Assignment paper generated successfully!`
+      });
       await redis.del(`job:progress:${assignmentId}`);
 
     } catch (error: any) {
@@ -83,6 +87,10 @@ export const startWorker = () => {
       if (job.attemptsMade >= (job.opts.attempts || 3) - 1) {
         await Assignment.findByIdAndUpdate(assignmentId, { status: 'failed' });
         wsService.emitToAssignment(assignmentId, 'job:failed', { assignmentId, error: error.message });
+        wsService.emitGlobal('notification', {
+          type: 'error',
+          message: `Assignment generation failed: ${error.message}`
+        });
       }
       throw error;
     }

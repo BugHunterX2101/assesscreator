@@ -1,5 +1,6 @@
 import { callLLM } from '../workers/llm.service';
 import LibraryItem from '../models/LibraryItem';
+import { wsService } from './websocket.service';
 
 const parseJSON = (str: string) => {
   try {
@@ -30,6 +31,10 @@ export const generateQuestions = async (data: any) => {
     content: parsed
   });
   await item.save();
+  wsService.emitGlobal('notification', {
+    type: 'success',
+    message: `Toolkit: ${item.title} generated successfully!`
+  });
   return item;
 };
 
@@ -45,6 +50,10 @@ export const generateRubric = async (data: any) => {
     content: parsed
   });
   await item.save();
+  wsService.emitGlobal('notification', {
+    type: 'success',
+    message: `Toolkit: ${item.title} generated successfully!`
+  });
   return item;
 };
 
@@ -60,6 +69,10 @@ export const gradeEssay = async (data: any) => {
     content: parsed
   });
   await item.save();
+  wsService.emitGlobal('notification', {
+    type: 'success',
+    message: `Toolkit: ${item.title} generated successfully!`
+  });
   return item;
 };
 
@@ -75,5 +88,9 @@ export const generateLessonPlan = async (data: any) => {
     content: parsed
   });
   await item.save();
+  wsService.emitGlobal('notification', {
+    type: 'success',
+    message: `Toolkit: ${item.title} generated successfully!`
+  });
   return item;
 };

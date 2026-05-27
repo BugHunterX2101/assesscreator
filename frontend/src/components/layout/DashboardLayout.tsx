@@ -7,6 +7,8 @@ import { Header } from './Header';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LayoutGrid, FileText, Clock, Sparkles } from 'lucide-react';
+import { useGlobalSocket } from '@/hooks/useGlobalSocket';
+import { Toaster } from 'react-hot-toast';
 
 const MOBILE_NAV_ITEMS = [
   { name: 'Home', href: '/', icon: LayoutGrid },
@@ -17,9 +19,11 @@ const MOBILE_NAV_ITEMS = [
 
 export const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+  useGlobalSocket();
 
   return (
     <div className="flex h-screen bg-[#2A2B2D] md:bg-gray-50 overflow-hidden">
+      <Toaster position="top-right" />
       {/* Desktop Sidebar */}
       <Sidebar />
 

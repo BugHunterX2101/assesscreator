@@ -64,6 +64,17 @@ class WebSocketService {
       }
     });
   }
+
+  public emitGlobal(event: string, payload: any) {
+    if (!this.wss) return;
+    const message = JSON.stringify({ event, payload });
+    this.wss.clients.forEach((ws: WebSocket) => {
+      const extWs = ws as ExtWebSocket;
+      if (extWs.readyState === WebSocket.OPEN) {
+        extWs.send(message);
+      }
+    });
+  }
 }
 
 export const wsService = new WebSocketService();
