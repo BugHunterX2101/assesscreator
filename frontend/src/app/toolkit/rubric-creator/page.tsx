@@ -41,16 +41,16 @@ export default function RubricCreatorPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Assignment Description</label>
-            <textarea required value={form.assignmentDescription} onChange={e => setForm({...form, assignmentDescription: e.target.value})} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 h-32" placeholder="Describe the assignment in detail..." />
+            <textarea required value={form.assignmentDescription} onChange={e => setForm({...form, assignmentDescription: e.target.value})} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 h-32 text-gray-900 placeholder:text-gray-400 bg-white" placeholder="Describe the assignment in detail..." />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Total Marks</label>
-              <input type="number" required value={form.totalMarks} onChange={e => setForm({...form, totalMarks: parseInt(e.target.value) || 0})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" />
+              <input type="number" required value={form.totalMarks} onChange={e => setForm({...form, totalMarks: parseInt(e.target.value) || 0})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder:text-gray-400 bg-white" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Grading Scale</label>
-              <input type="text" required value={form.gradingScale} onChange={e => setForm({...form, gradingScale: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="e.g. 1-5 Scale, Letter Grades" />
+              <input type="text" required value={form.gradingScale} onChange={e => setForm({...form, gradingScale: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder:text-gray-400 bg-white" placeholder="e.g. 1-5 Scale, Letter Grades" />
             </div>
           </div>
           

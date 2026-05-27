@@ -42,19 +42,19 @@ export default function QuestionGeneratorPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Topic</label>
-              <input type="text" required value={form.topic} onChange={e => setForm({...form, topic: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. Photosynthesis" />
+              <input type="text" required value={form.topic} onChange={e => setForm({...form, topic: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder:text-gray-400 bg-white" placeholder="e.g. Photosynthesis" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-              <input type="text" required value={form.subject} onChange={e => setForm({...form, subject: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. Biology" />
+              <input type="text" required value={form.subject} onChange={e => setForm({...form, subject: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder:text-gray-400 bg-white" placeholder="e.g. Biology" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Grade</label>
-              <input type="text" required value={form.grade} onChange={e => setForm({...form, grade: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. 10th Grade" />
+              <input type="text" required value={form.grade} onChange={e => setForm({...form, grade: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder:text-gray-400 bg-white" placeholder="e.g. 10th Grade" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Question Type</label>
-              <select value={form.questionType} onChange={e => setForm({...form, questionType: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+              <select value={form.questionType} onChange={e => setForm({...form, questionType: e.target.value})} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900">
                 <option value="MCQ">Multiple Choice</option>
                 <option value="Short Answer">Short Answer</option>
                 <option value="Long Essay">Long Essay</option>

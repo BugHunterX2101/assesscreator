@@ -41,11 +41,11 @@ export default function EssayGraderPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Assignment Prompt / Rubric</label>
-            <textarea required value={form.promptText} onChange={e => setForm({...form, promptText: e.target.value})} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 h-24" placeholder="What was the student asked to write about?" />
+            <textarea required value={form.promptText} onChange={e => setForm({...form, promptText: e.target.value})} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 h-24 text-gray-900 placeholder:text-gray-400 bg-white" placeholder="What was the student asked to write about?" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Student Essay</label>
-            <textarea required value={form.essay} onChange={e => setForm({...form, essay: e.target.value})} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 h-64" placeholder="Paste the student's essay here..." />
+            <textarea required value={form.essay} onChange={e => setForm({...form, essay: e.target.value})} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 h-64 text-gray-900 placeholder:text-gray-400 bg-white" placeholder="Paste the student's essay here..." />
           </div>
           
           <button type="submit" disabled={loading} className="w-full mt-4 bg-purple-600 text-white font-medium py-3 rounded-lg hover:bg-purple-700 transition flex items-center justify-center space-x-2 disabled:opacity-70">
