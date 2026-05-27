@@ -7,108 +7,267 @@ app_port: 7860
 pinned: false
 ---
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/graduation-cap.svg" width="80" alt="Logo"/>
-  <h1>VedaAI Assessment Creator</h1>
-  <p><strong>A Next-Generation AI Workspace for Modern Educators</strong></p>
-  <p>
-    <img src="https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js" alt="Next.js" />
-    <img src="https://img.shields.io/badge/Express.js-Backend-blue?style=flat-square&logo=express" alt="Express" />
-    <img src="https://img.shields.io/badge/Groq-LLM_API-orange?style=flat-square" alt="Groq" />
-    <img src="https://img.shields.io/badge/MongoDB-Database-green?style=flat-square&logo=mongodb" alt="MongoDB" />
-    <img src="https://img.shields.io/badge/Redis-Queue-red?style=flat-square&logo=redis" alt="Redis" />
-  </p>
-</div>
-
-<br />
-
-VedaAI Assessment Creator is a full-stack, enterprise-grade AI application designed to eliminate administrative overhead for educators. By leveraging the blazing-fast Groq LLM API and an asynchronous microservice architecture, VedaAI allows teachers to generate structured examination papers, grade essays, and manage classrooms with zero friction.
+A modern, full-stack AI application for generating custom examination papers, grading essays, and managing classrooms with real-time generation status tracking. Built with React, Next.js, Node.js, Express, MongoDB, and Redis.
 
 ## Features
+- **Assessment Generation**: Create structured examination papers from PDF or TXT references
+- **Teacher Toolkit**: Generate lesson plans, grading rubrics, quizzes, and instantly grade student essays
+- **Group Management**: Create student groups, manage rosters, and organize classes
+- **Real-time Progress**: WebSockets stream generation status directly to the UI
+- **Asynchronous Processing**: Heavy LLM tasks are processed in the background using BullMQ
+- **Secure API**: Input validation, error boundary protection, and robust error handling
+- **Docker Support**: Complete containerization optimized for Hugging Face Spaces
 
-- **AI Teacher's Toolkit**
-  - **Essay Grader**: Instantly evaluate student essays against custom prompts with detailed feedback, strengths, and areas for improvement.
-  - **Lesson Planner**: Automatically generate structured, time-blocked lesson plans complete with objectives and required materials.
-  - **Question Generator**: Create targeted practice questions and quizzes in seconds.
-  - **Rubric Creator**: Standardize evaluations by instantly generating detailed grading rubrics.
-- **Smart Assessment Creator**
-  - Upload PDF or TXT reference materials and have the AI autonomously extract text and generate complete, ready-to-print examination papers.
-- **Dynamic Classroom Management**
-  - Create student groups, manage class rosters, and assign specific assessments directly from the beautiful, glassmorphic dashboard.
-- **Real-Time Progress Streaming**
-  - Built on WebSockets and BullMQ, the platform streams AI generation progress directly to your UI in real-time without blocking your workflow.
-
-## System Architecture
-
-The application uses an asynchronous microservice architecture to handle long-running LLM generation tasks seamlessly.
-
+## Architecture
 ```mermaid
-graph TD
-    Client[Next.js Frontend] -->|REST API| API[Express Server]
-    Client <-->|WebSocket| WS[WebSocket Service]
-    API -->|Persist Assignment| DB[(MongoDB)]
-    API -->|Enqueue Generation| Queue[(Redis / BullMQ)]
-    Queue --> Worker[Background Generation Worker]
-    Worker -->|Extract Text| Parse[PDF/TXT Parser]
-    Worker -->|Prompt LLM| Groq[Groq API llama3-70b]
-    Groq --> Worker
-    Worker -->|Update Status & Save Results| DB
-    Worker -->|Broadcast Progress| WS
+graph TB
+    subgraph Client["Frontend (Next.js 14)"]
+        UI["UI Components<br/>- Dashboard<br/>- Toolkit Modals<br/>- Paper View"]
+        Hooks["Hooks & State<br/>- useWebSocket<br/>- Zustand Store"]
+        API["API Client<br/>Axios"]
+    end
+
+    subgraph Server["Backend (Express)"]
+        Routes["API Routes<br/>/api/toolkit<br/>/api/groups"]
+        Controllers["Controllers<br/>- toolkit.controller<br/>- groups.controller"]
+        Services["Services<br/>- llm.service<br/>- websocket.service"]
+        Middleware["Middleware<br/>- Validation<br/>- Error Handler"]
+    end
+
+    subgraph Infrastructure["Database & Queue"]
+        DB["MongoDB<br/>Groups, Assignments"]
+        Queue["Redis / BullMQ<br/>Task Queue"]
+    end
+    
+    Worker["Generation Worker<br/>Groq API (llama3-70b)"]
+
+    UI -->|HTTP| API
+    API -->|Fetch| Routes
+    Routes --> Controllers
+    Controllers --> Services
+    Services --> Middleware
+    Services -->|Mongoose ORM| DB
+    Services -->|Enqueue| Queue
+    Queue --> Worker
+    Worker -->|Update Status| DB
+    Worker -->|Broadcast Progress| Client
+
+    style Client fill:#61dafb,stroke:#333,color:#000
+    style Server fill:#68a063,stroke:#333,color:#fff
+    style Infrastructure fill:#336791,stroke:#333,color:#fff
+    style Worker fill:#f59e0b,stroke:#333,color:#fff
 ```
 
-## Tech Stack
-
-### Frontend
-* **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
-* **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-* **Animations**: [Framer Motion](https://www.framer.com/motion/)
-* **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)
-* **Icons**: [Lucide React](https://lucide.dev/)
-
-### Backend
-* **Runtime**: [Node.js](https://nodejs.org/) & [Express](https://expressjs.com/)
-* **Real-time Engine**: [Socket.io](https://socket.io/)
-* **Task Queue**: [BullMQ](https://docs.bullmq.io/) backed by Redis
-* **Database**: [MongoDB](https://www.mongodb.com/) via Mongoose
-* **AI & Parsing**: [LangChain](https://js.langchain.com/), [Groq API](https://groq.com/), PDF-Parse
-
-## Project Structure
-
-This project is structured as an NPM Workspace Monorepo.
-
-```text
+```
 assesscreator/
-├── backend/                  # Express API & Background Workers
+├── backend/                          # Node.js Express API
 │   ├── src/
-│   │   ├── config/           # MongoDB and Redis connection handlers
-│   │   ├── controllers/      # REST API route handlers
-│   │   ├── models/           # Mongoose Data Models (Group, Paper, etc.)
-│   │   ├── routes/           # Express Routers
-│   │   ├── services/         # Queue and WebSocket services
-│   │   └── workers/          # BullMQ Workers and LLM integrations
+│   │   ├── index.ts                 # Server entry point
+│   │   ├── controllers/             
+│   │   │   ├── groups.controller.ts # Group request handlers
+│   │   │   └── toolkit.controller.ts# AI Toolkit handlers
+│   │   ├── services/
+│   │   │   ├── llm.service.ts       # AI prompt logic
+│   │   │   └── websocket.service.ts # Socket.io broadcasting
+│   │   ├── routes/
+│   │   │   ├── groups.ts            # /api/groups routes
+│   │   │   └── toolkit.ts           # /api/toolkit routes
+│   │   ├── config/
+│   │   │   ├── db.ts                # MongoDB connection
+│   │   │   └── redis.ts             # Redis connection
+│   │   └── models/
+│   │       ├── Group.model.ts       # Mongoose schemas
+│   │       └── Assignment.model.ts
+│   ├── workers/
+│   │   └── generation.worker.ts     # BullMQ background worker
 │   └── package.json
-├── frontend/                 # Next.js Application (App Router)
+│
+├── frontend/                        # Next.js SPA
 │   ├── src/
-│   │   ├── app/              # Routes (Dashboard, Toolkit, Groups, etc.)
-│   │   ├── components/       # Reusable React UI Components
-│   │   ├── hooks/            # Custom Hooks (WebSocket Client)
-│   │   └── store/            # Zustand global state management
+│   │   ├── app/                     # App Router pages
+│   │   │   ├── assignments/         # Paper and status views
+│   │   │   ├── groups/              # Group management
+│   │   │   └── toolkit/             # AI mini-tools
+│   │   ├── components/
+│   │   │   ├── form/                # Reusable inputs
+│   │   │   ├── layout/              # Sidebar & Navigation
+│   │   │   └── paper/               # Examination paper UI
+│   │   ├── store/
+│   │   │   └── paperStore.ts        # Zustand state
+│   │   └── hooks/
+│   │       └── useGlobalSocket.ts   # Socket hook
 │   └── package.json
-├── packages/                 
-│   └── shared/               # Shared Zod Schemas & TypeScript Types
-├── Dockerfile                # Configured for Hugging Face Spaces
-├── start.sh                  # Bootstraps Mongo, Redis, and Node apps
-└── docker-compose.yml        # Local development orchestration
+│
+├── packages/
+│   └── shared/                      # Shared TS interfaces
+├── Dockerfile                       # Hugging Face deployment image
+├── start.sh                         # Bootstrap script
+├── docker-compose.yml               # Local environment
+└── package.json                     # Root workspace config
 ```
 
-## Deployment
+### Prerequisites
+- Node.js 20+
+- Docker & Docker Compose
+- Git
+- Groq API Key
 
-This repository is optimized to run fully self-contained on **Hugging Face Spaces** (Docker SDK). The provided `Dockerfile` and `start.sh` scripts automatically provision the internal MongoDB and Redis daemons within the container, ensuring a one-click deployment without needing external database providers.
-
-To run locally using Docker Compose:
+### Using Docker Compose (Recommended)
 ```bash
-docker-compose up --build
+# Clone repository
+git clone https://github.com/BugHunterX2101/assesscreator.git
+cd assesscreator
+
+# Setup environment variables
+cp .env.example .env
+
+# Build and start all services
+docker compose up --build
+
+# Open http://localhost:3000 in your browser
 ```
+
+### Local Development
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Setup environment
+cp .env.example .env
+
+# 3. Start MongoDB and Redis using Docker
+docker run --name vedaai-mongo -p 27017:27017 -d mongo:latest
+docker run --name vedaai-redis -p 6379:6379 -d redis:latest
+
+# 4. Start servers in separate terminals
+# Terminal 1: Backend
+npm run dev --workspace=backend
+
+# Terminal 2: Frontend  
+npm run dev --workspace=frontend
+```
+
+### Groups API
+- `GET /api/groups` - List all groups
+- `POST /api/groups` - Create new group
+- `POST /api/groups/:id/students` - Add student to a group
+
+### Toolkit API
+- `POST /api/toolkit/generate-lesson-plan` - Generate lesson plan
+- `POST /api/toolkit/grade-essay` - Grade student essay
+- `POST /api/toolkit/generate-questions` - Generate quizzes
+- `POST /api/toolkit/generate-rubric` - Create grading rubric
+
+- **Asynchronous Queue** - Heavy LLM generation happens in the background via BullMQ to prevent HTTP timeouts
+- **WebSockets** - Real-time progress percentage streaming
+- **Input Validation** - Sanitizes all user inputs
+- **Graceful Shutdown** - Properly closes DB and Redis connections
+- **Environment Variables** - Validates required env vars at startup
+
+### Groups Collection
+```javascript
+{
+  _id: ObjectId,
+  name: String (required),
+  students: [
+    {
+      name: String,
+      addedAt: Date
+    }
+  ],
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+### Assignments Collection
+```javascript
+{
+  _id: ObjectId,
+  title: String (required),
+  status: String (enum: "pending", "processing", "completed", "failed"),
+  progress: Number,
+  questions: Array,
+  createdAt: Date
+}
+```
+
+## Technologies
+| Component | Tech Stack |
+|-----------|-----------|
+| **Frontend** | Next.js 14, React, Tailwind CSS, Zustand |
+| **Backend** | Express, Node.js 20 |
+| **Database** | MongoDB, Mongoose |
+| **Queue & Cache** | BullMQ, Redis |
+| **AI Integration** | Groq API (llama3), LangChain |
+| **Real-time** | Socket.io |
+| **Deployment** | Docker, Docker Compose |
+
+## Environment Variables
+```bash
+# Backend / General
+GROQ_API_KEY=your_groq_api_key
+MONGODB_URI=mongodb://localhost:27017/assesscreator
+REDIS_URL=redis://localhost:6379
+PORT=3001
+
+# Frontend
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
+```
+
+## Generation Statuses
+- **Pending** - Task added to Redis queue
+- **Processing** - Worker is communicating with Groq API
+- **Completed** - Assessment successfully generated and saved
+- **Failed** - Error occurred during text extraction or generation
+
+## Development Workflow
+1. Create a feature branch: `git checkout -b feature/your-feature`
+2. Make changes and verify build: `npm run build --workspaces`
+3. Commit: `git commit -m "feat: description"`
+4. Push: `git push origin feature/your-feature`
+5. Open pull request on GitHub
+
+## Scripts
+```bash
+# Root
+npm run install      # Install all workspaces
+npm run build        # Build all workspaces
+
+# Frontend
+npm run dev --workspace=frontend
+npm run build --workspace=frontend
+
+# Backend
+npm run dev --workspace=backend
+npm run build --workspace=backend
+
+# Docker
+docker compose up --build    # Start all services
+docker compose down          # Stop all services
+```
+
+## Known Issues and TODO
+- Add authentication and user accounts
+- Implement PDF export for generated papers
+- Add soft deletes for audit trail
+- Implement API rate limiting
+
+## Contact and Support
+For issues, questions, or contributions, please:
+- Open an [issue](https://github.com/BugHunterX2101/assesscreator/issues)
+- Submit a [pull request](https://github.com/BugHunterX2101/assesscreator/pulls)
+
+## Contributors
+This project is maintained by the following contributors:
+
+- BugHunterX2101 <veditagrawal21@gmail.com>
+
+## License
+MIT License - see LICENSE file for details
 
 ---
-*Built with passion for modern educators.*
+
+**Built for modern educators**
+
+Last updated: May 2026
