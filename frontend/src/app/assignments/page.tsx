@@ -112,6 +112,7 @@ export default function AssignmentsPage() {
                  <span>{new Date(assignment.dueDate).toLocaleDateString('en-GB').replace(/\//g, '-')}</span>
               </span>
             </div>
+            </div>
           </Link>
         ))}
       </div>
