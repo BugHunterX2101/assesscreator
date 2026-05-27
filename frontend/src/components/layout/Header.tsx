@@ -4,6 +4,7 @@ import React from 'react';
 
 import { Bell, ArrowLeft, ChevronDown } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 
 export const Header = () => {
@@ -41,12 +42,18 @@ export const Header = () => {
       </div>
 
       <div className="flex items-center space-x-6">
-        <button className="relative p-2 text-gray-500 hover:bg-gray-200 rounded-full transition-colors">
+        <button 
+          onClick={() => toast('No new notifications', { icon: '🔔' })}
+          className="relative p-2 text-gray-500 hover:bg-gray-200 rounded-full transition-colors"
+        >
           <Bell className="w-5 h-5" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full border-2 border-[#F5F6F8]"></span>
         </button>
         
-        <div className="flex items-center space-x-3 cursor-pointer hover:bg-gray-200/50 p-1.5 pr-3 rounded-full transition-colors">
+        <div 
+          onClick={() => toast('Profile settings coming soon!')}
+          className="flex items-center space-x-3 cursor-pointer hover:bg-gray-200/50 p-1.5 pr-3 rounded-full transition-colors"
+        >
           <div className="w-8 h-8 rounded-full bg-blue-100 overflow-hidden flex items-center justify-center">
              <span className="text-lg">🧑‍💼</span>
           </div>

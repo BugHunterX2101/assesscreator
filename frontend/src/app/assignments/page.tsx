@@ -91,13 +91,17 @@ export default function AssignmentsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
         {assignments.map((assignment) => (
-          <div key={assignment._id} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-shadow">
-            <div className="flex justify-between items-start mb-12">
-              <h3 className="text-lg font-bold text-gray-900">{assignment.title}</h3>
-              <button className="text-gray-400 hover:text-gray-600 p-1">
-                <MoreVertical className="w-5 h-5" />
-              </button>
-            </div>
+          <Link href={`/assignments/${assignment._id}/paper`} key={assignment._id}>
+            <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-shadow h-full flex flex-col justify-between">
+              <div className="flex justify-between items-start mb-12">
+                <h3 className="text-lg font-bold text-gray-900">{assignment.title}</h3>
+                <button 
+                  onClick={(e) => { e.preventDefault(); /* Prevent link click */ alert('Options coming soon'); }}
+                  className="text-gray-400 hover:text-gray-600 p-1"
+                >
+                  <MoreVertical className="w-5 h-5" />
+                </button>
+              </div>
             <div className="flex justify-between items-center text-xs font-semibold text-gray-800">
               <span className="flex items-center space-x-1">
                  <span className="text-gray-500 font-normal">Assigned on: </span>
@@ -108,7 +112,7 @@ export default function AssignmentsPage() {
                  <span>{new Date(assignment.dueDate).toLocaleDateString('en-GB').replace(/\//g, '-')}</span>
               </span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

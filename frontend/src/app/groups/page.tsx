@@ -21,7 +21,10 @@ export default function GroupsPage() {
           </h1>
           <p className="text-gray-500 text-lg">Manage your student groups and classes.</p>
         </div>
-        <button className="bg-[#2A2B2D] hover:bg-black text-white px-6 py-3 rounded-full font-medium transition-colors shadow-md flex items-center space-x-2">
+        <button 
+          onClick={() => alert('Groups feature is coming soon!')}
+          className="bg-[#2A2B2D] hover:bg-black text-white px-6 py-3 rounded-full font-medium transition-colors shadow-md flex items-center space-x-2"
+        >
           <Plus className="w-5 h-5" />
           <span>Create Group</span>
         </button>
@@ -44,7 +47,10 @@ export default function GroupsPage() {
                   </div>
                 ))}
               </div>
-              <button className="text-gray-400 hover:text-gray-700">
+              <button 
+                onClick={() => alert('Options coming soon')}
+                className="text-gray-400 hover:text-gray-700"
+              >
                 <UserPlus className="w-5 h-5" />
               </button>
             </div>

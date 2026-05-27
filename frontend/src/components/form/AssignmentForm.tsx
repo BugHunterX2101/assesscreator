@@ -205,6 +205,7 @@ export const AssignmentForm: React.FC = () => {
         <div className="flex justify-between items-center">
           <button
             type="button"
+            onClick={() => router.back()}
             className="px-6 py-2.5 border border-gray-200 rounded-full text-sm font-semibold text-gray-700 hover:bg-gray-50 flex items-center transition-colors"
           >
             <span className="mr-2">←</span> Previous
