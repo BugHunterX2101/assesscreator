@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Search, Filter, MoreVertical } from 'lucide-react';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 interface Assignment {
   _id: string;
@@ -96,7 +97,7 @@ export default function AssignmentsPage() {
               <div className="flex justify-between items-start mb-12">
                 <h3 className="text-lg font-bold text-gray-900">{assignment.title}</h3>
                 <button 
-                  onClick={(e) => { e.preventDefault(); /* Prevent link click */ alert('Options coming soon'); }}
+                  onClick={(e) => { e.preventDefault(); /* Prevent link click */ toast('Options coming soon', { icon: '🚧' }); }}
                   className="text-gray-400 hover:text-gray-600 p-1"
                 >
                   <MoreVertical className="w-5 h-5" />

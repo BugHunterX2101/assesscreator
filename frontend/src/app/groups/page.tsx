@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { Users, Plus, UserPlus } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function GroupsPage() {
   const groups = [
@@ -22,7 +23,7 @@ export default function GroupsPage() {
           <p className="text-gray-500 text-lg">Manage your student groups and classes.</p>
         </div>
         <button 
-          onClick={() => alert('Groups feature is coming soon!')}
+          onClick={() => toast('Groups feature is coming soon!', { icon: '🚧' })}
           className="bg-[#2A2B2D] hover:bg-black text-white px-6 py-3 rounded-full font-medium transition-colors shadow-md flex items-center space-x-2"
         >
           <Plus className="w-5 h-5" />
@@ -48,7 +49,7 @@ export default function GroupsPage() {
                 ))}
               </div>
               <button 
-                onClick={() => alert('Options coming soon')}
+                onClick={() => toast('Options coming soon', { icon: '🚧' })}
                 className="text-gray-400 hover:text-gray-700"
               >
                 <UserPlus className="w-5 h-5" />

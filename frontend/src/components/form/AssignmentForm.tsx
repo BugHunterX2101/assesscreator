@@ -7,6 +7,7 @@ import { FileUploader } from './FileUploader';
 import { AssignmentFormSchema } from '@vedaai/shared';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
 
 export const AssignmentForm: React.FC = () => {
@@ -53,13 +54,9 @@ export const AssignmentForm: React.FC = () => {
     } catch (error) {
       setJobStatus('failed');
       if (axios.isAxiosError(error)) {
-        if (error.response?.data?.error?.details) {
-          // Handle server-side validation errors
-        } else {
-          alert(error.response?.data?.error?.message || 'Submission failed');
-        }
+        toast.error(error.response?.data?.error?.message || 'Submission failed');
       } else {
-        alert('Submission failed');
+        toast.error('Submission failed');
       }
     }
   };
