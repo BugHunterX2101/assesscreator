@@ -1,6 +1,5 @@
 ---
 title: VedaAI Assessment Creator
-emoji: 📝
 colorFrom: indigo
 colorTo: purple
 sdk: docker
@@ -25,21 +24,21 @@ pinned: false
 
 VedaAI Assessment Creator is a full-stack, enterprise-grade AI application designed to eliminate administrative overhead for educators. By leveraging the blazing-fast Groq LLM API and an asynchronous microservice architecture, VedaAI allows teachers to generate structured examination papers, grade essays, and manage classrooms with zero friction.
 
-## ✨ Features
+## Features
 
-- 🎯 **AI Teacher's Toolkit**
-  - **📝 Essay Grader**: Instantly evaluate student essays against custom prompts with detailed feedback, strengths, and areas for improvement.
-  - **📅 Lesson Planner**: Automatically generate structured, time-blocked lesson plans complete with objectives and required materials.
-  - **❓ Question Generator**: Create targeted practice questions and quizzes in seconds.
-  - **📊 Rubric Creator**: Standardize evaluations by instantly generating detailed grading rubrics.
-- 📄 **Smart Assessment Creator**
+- **AI Teacher's Toolkit**
+  - **Essay Grader**: Instantly evaluate student essays against custom prompts with detailed feedback, strengths, and areas for improvement.
+  - **Lesson Planner**: Automatically generate structured, time-blocked lesson plans complete with objectives and required materials.
+  - **Question Generator**: Create targeted practice questions and quizzes in seconds.
+  - **Rubric Creator**: Standardize evaluations by instantly generating detailed grading rubrics.
+- **Smart Assessment Creator**
   - Upload PDF or TXT reference materials and have the AI autonomously extract text and generate complete, ready-to-print examination papers.
-- 👥 **Dynamic Classroom Management**
+- **Dynamic Classroom Management**
   - Create student groups, manage class rosters, and assign specific assessments directly from the beautiful, glassmorphic dashboard.
-- ⚡ **Real-Time Progress Streaming**
+- **Real-Time Progress Streaming**
   - Built on WebSockets and BullMQ, the platform streams AI generation progress directly to your UI in real-time without blocking your workflow.
 
-## 🏗️ System Architecture
+## System Architecture
 
 The application uses an asynchronous microservice architecture to handle long-running LLM generation tasks seamlessly.
 
@@ -57,7 +56,7 @@ graph TD
     Worker -->|Broadcast Progress| WS
 ```
 
-## 💻 Tech Stack
+## Tech Stack
 
 ### Frontend
 * **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
@@ -73,7 +72,7 @@ graph TD
 * **Database**: [MongoDB](https://www.mongodb.com/) via Mongoose
 * **AI & Parsing**: [LangChain](https://js.langchain.com/), [Groq API](https://groq.com/), PDF-Parse
 
-## 📂 Project Structure
+## Project Structure
 
 This project is structured as an NPM Workspace Monorepo.
 
@@ -102,7 +101,7 @@ assesscreator/
 └── docker-compose.yml        # Local development orchestration
 ```
 
-## 🚀 Deployment
+## Deployment
 
 This repository is optimized to run fully self-contained on **Hugging Face Spaces** (Docker SDK). The provided `Dockerfile` and `start.sh` scripts automatically provision the internal MongoDB and Redis daemons within the container, ensuring a one-click deployment without needing external database providers.
 
@@ -112,4 +111,4 @@ docker-compose up --build
 ```
 
 ---
-*Built with ❤️ for modern educators.*
+*Built with passion for modern educators.*
