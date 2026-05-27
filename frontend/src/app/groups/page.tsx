@@ -45,6 +45,7 @@ export default function GroupsPage() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchGroups();
   }, []);
 
@@ -61,6 +62,7 @@ export default function GroupsPage() {
       setNewGroupName('');
       fetchGroups(); // Refresh list
     } catch (err) {
+      console.error(err);
       toast.error('Failed to create group');
     } finally {
       setIsSubmitting(false);
@@ -81,6 +83,7 @@ export default function GroupsPage() {
       setSelectedGroupId(null);
       fetchGroups(); // Refresh list
     } catch (err) {
+      console.error(err);
       toast.error('Failed to add student');
     } finally {
       setIsSubmitting(false);

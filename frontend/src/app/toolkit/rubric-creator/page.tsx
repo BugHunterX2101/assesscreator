@@ -4,9 +4,20 @@ import axios from 'axios';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
+interface Criteria {
+  name: string;
+  points: string;
+  description: string;
+}
+
+interface RubricResult {
+  title: string;
+  criteria: Criteria[];
+}
+
 export default function RubricCreatorPage() {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<RubricResult | null>(null);
   const [error, setError] = useState('');
 
   const [form, setForm] = useState({
@@ -21,8 +32,12 @@ export default function RubricCreatorPage() {
       const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
       const res = await axios.post(`${baseUrl}/api/toolkit/generate-rubric`, form);
       setResult(res.data.data.content);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to generate rubric');
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.error || 'Failed to generate rubric');
+      } else {
+        setError('An unexpected error occurred');
+      }
     } finally {
       setLoading(false);
     }
@@ -65,7 +80,7 @@ export default function RubricCreatorPage() {
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mt-8">
           <h2 className="text-2xl font-bold mb-6">{result.title}</h2>
           <div className="space-y-4">
-            {result.criteria?.map((c: any, i: number) => (
+            {result.criteria?.map((c: Criteria, i: number) => (
               <div key={i} className="p-5 border border-gray-200 rounded-xl bg-green-50/30">
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-lg font-bold text-gray-900">{c.name}</h3>

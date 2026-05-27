@@ -4,9 +4,16 @@ import axios from 'axios';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
+interface EssayResult {
+  score: string;
+  feedback: string;
+  strengths: string[];
+  improvements: string[];
+}
+
 export default function EssayGraderPage() {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<EssayResult | null>(null);
   const [error, setError] = useState('');
 
   const [form, setForm] = useState({
@@ -21,8 +28,12 @@ export default function EssayGraderPage() {
       const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
       const res = await axios.post(`${baseUrl}/api/toolkit/grade-essay`, form);
       setResult(res.data.data.content);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to grade essay');
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.error || 'Failed to grade essay');
+      } else {
+        setError('An unexpected error occurred');
+      }
     } finally {
       setLoading(false);
     }

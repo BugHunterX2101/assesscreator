@@ -4,9 +4,19 @@ import axios from 'axios';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
+interface Question {
+  text: string;
+  answer: string;
+}
+
+interface QuestionResult {
+  title: string;
+  questions: Question[];
+}
+
 export default function QuestionGeneratorPage() {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<QuestionResult | null>(null);
   const [error, setError] = useState('');
 
   const [form, setForm] = useState({
@@ -21,8 +31,12 @@ export default function QuestionGeneratorPage() {
       const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
       const res = await axios.post(`${baseUrl}/api/toolkit/generate-questions`, form);
       setResult(res.data.data.content);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to generate');
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.error || 'Failed to generate questions');
+      } else {
+        setError('An unexpected error occurred');
+      }
     } finally {
       setLoading(false);
     }
@@ -73,7 +87,7 @@ export default function QuestionGeneratorPage() {
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mt-8">
           <h2 className="text-2xl font-bold mb-4">{result.title}</h2>
           <div className="space-y-6">
-            {result.questions?.map((q: any, i: number) => (
+            {result.questions?.map((q: Question, i: number) => (
               <div key={i} className="p-4 bg-gray-50 rounded-lg">
                 <p className="font-semibold text-gray-900 mb-2">{i + 1}. {q.text}</p>
                 <p className="text-gray-600"><span className="font-medium text-green-700">Answer:</span> {q.answer}</p>

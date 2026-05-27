@@ -4,9 +4,21 @@ import axios from 'axios';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
+interface Activity {
+  time: string;
+  description: string;
+}
+
+interface LessonPlanResult {
+  title: string;
+  objectives: string[];
+  materials: string[];
+  activities: Activity[];
+}
+
 export default function LessonPlannerPage() {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<LessonPlanResult | null>(null);
   const [error, setError] = useState('');
 
   const [form, setForm] = useState({
@@ -21,8 +33,12 @@ export default function LessonPlannerPage() {
       const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
       const res = await axios.post(`${baseUrl}/api/toolkit/generate-lesson-plan`, form);
       setResult(res.data.data.content);
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to generate lesson plan');
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.error || 'Failed to generate lesson plan');
+      } else {
+        setError('An unexpected error occurred');
+      }
     } finally {
       setLoading(false);
     }
@@ -90,7 +106,7 @@ export default function LessonPlannerPage() {
           <div>
             <h3 className="text-lg font-bold text-gray-900 mb-4">Activities</h3>
             <div className="space-y-4">
-              {result.activities?.map((act: any, i: number) => (
+              {result.activities?.map((act: Activity, i: number) => (
                 <div key={i} className="flex space-x-4 p-4 bg-orange-50/50 rounded-xl border border-orange-100">
                   <div className="flex-shrink-0 w-24">
                     <span className="font-bold text-orange-600 bg-orange-100 px-2 py-1 rounded text-sm">{act.time}</span>

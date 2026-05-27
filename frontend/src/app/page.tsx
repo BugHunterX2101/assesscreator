@@ -41,7 +41,7 @@ export default function Home() {
             </span>
             <span>Welcome back, John!</span>
           </h1>
-          <p className="text-gray-500 text-lg">Here's an overview of your teaching workspace today.</p>
+          <p className="text-gray-500 text-lg">Here&apos;s an overview of your teaching workspace today.</p>
         </div>
         <Link 
           href="/create"
@@ -90,7 +90,7 @@ export default function Home() {
 
       {/* Quick Tools */}
       <div>
-        <h2 className="text-xl font-bold text-gray-900 mb-6">AI Teacher's Toolkit</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-6">AI Teacher&apos;s Toolkit</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Link href="/toolkit/question-generator" className="group block bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
             <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">

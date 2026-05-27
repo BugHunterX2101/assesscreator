@@ -3,8 +3,15 @@ import React from 'react';
 import { Clock, Book, FileText, Search, Filter } from 'lucide-react';
 import axios from 'axios';
 
+interface LibraryItem {
+  _id: string;
+  title: string;
+  type: string;
+  createdAt: string;
+}
+
 export default function LibraryPage() {
-  const [items, setItems] = React.useState<any[]>([]);
+  const [items, setItems] = React.useState<LibraryItem[]>([]);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
