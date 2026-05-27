@@ -1,4 +1,7 @@
+"use client";
 import React from 'react';
+
+
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import Link from 'next/link';
