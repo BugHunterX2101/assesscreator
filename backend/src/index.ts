@@ -12,6 +12,7 @@ import assignmentsRoutes from './routes/assignments.routes';
 import paperRoutes from './routes/paper.routes';
 import uploadRoutes from './routes/upload.routes';
 import toolkitRoutes from './routes/toolkit.routes';
+import groupsRoutes from './routes/groups.routes';
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use('/api/assignments', assignmentsRoutes);
 app.use('/api/assignments', paperRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/toolkit', toolkitRoutes);
+app.use('/api/groups', groupsRoutes);
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
