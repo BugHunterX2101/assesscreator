@@ -20,7 +20,7 @@ export default function PaperPage({ params }: { params: Promise<{ id: string }> 
       setIsLoading(true);
       setError(null);
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
+        const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
         const res = await axios.get(`${baseUrl}/api/assignments/${assignmentId}/paper`);
         setPaper(res.data.paper);
       } catch (err: any) {

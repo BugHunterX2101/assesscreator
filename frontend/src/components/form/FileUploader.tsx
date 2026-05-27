@@ -27,7 +27,7 @@ export const FileUploader: React.FC<Props> = ({ onUploadSuccess }) => {
     setError(null);
 
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
       const res = await axios.post(`${baseUrl}/api/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });

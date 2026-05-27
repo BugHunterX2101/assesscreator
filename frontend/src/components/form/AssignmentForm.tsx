@@ -45,7 +45,7 @@ export const AssignmentForm: React.FC = () => {
     setJobStatus('pending');
 
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
       const res = await axios.post(`${baseUrl}/api/assignments`, form);
       
       setCurrentAssignmentId(res.data.assignmentId);

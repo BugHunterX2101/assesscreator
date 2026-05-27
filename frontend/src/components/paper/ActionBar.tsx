@@ -24,7 +24,7 @@ export const ActionBar: React.FC<Props> = ({ assignmentId }) => {
     setJobStatus('pending');
     
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
       await axios.post(`${baseUrl}/api/assignments/${assignmentId}/regenerate`, { feedback });
       router.push(`/assignments/${assignmentId}/status`);
     } catch (err: any) {

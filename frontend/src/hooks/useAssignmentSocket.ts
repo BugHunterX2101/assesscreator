@@ -12,7 +12,7 @@ export const useAssignmentSocket = (assignmentId: string | null) => {
     if (!assignmentId) return;
 
     const connect = () => {
-      const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3001/ws';
+      const wsUrl = process.env.NEXT_PUBLIC_WS_URL || (typeof window !== 'undefined' ? `wss://${window.location.host}/ws` : 'ws://localhost:3001/ws');
       ws.current = new WebSocket(`${wsUrl}?assignmentId=${assignmentId}`);
 
       ws.current.onopen = () => {
