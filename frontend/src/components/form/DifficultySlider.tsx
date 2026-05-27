@@ -38,7 +38,7 @@ export const DifficultySlider: React.FC<Props> = ({ difficulty, onChange, error 
             min="0" max="100" 
             value={difficulty.easy}
             onChange={(e) => handleChange('easy', e.target.value)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-green-500 focus:ring-1 focus:ring-green-500"
           />
         </div>
         <div>
@@ -48,7 +48,7 @@ export const DifficultySlider: React.FC<Props> = ({ difficulty, onChange, error 
             min="0" max="100" 
             value={difficulty.medium}
             onChange={(e) => handleChange('medium', e.target.value)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500"
           />
         </div>
         <div>
@@ -58,7 +58,7 @@ export const DifficultySlider: React.FC<Props> = ({ difficulty, onChange, error 
             min="0" max="100" 
             value={difficulty.hard}
             onChange={(e) => handleChange('hard', e.target.value)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-red-500 focus:ring-1 focus:ring-red-500"
           />
         </div>
       </div>

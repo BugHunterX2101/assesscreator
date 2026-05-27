@@ -14,6 +14,9 @@ export const Header = () => {
   let title = 'Dashboard';
   if (pathname.includes('/assignments')) title = 'Assignments';
   if (pathname.includes('/create')) title = 'Create Assignment';
+  if (pathname.includes('/library')) title = 'My Library';
+  if (pathname.includes('/toolkit')) title = 'AI Teacher\'s Toolkit';
+  if (pathname.includes('/settings')) title = 'Settings';
 
   return (
     <header className="h-20 bg-[#F5F6F8] flex items-center justify-between px-8 w-full sticky top-0 z-20">

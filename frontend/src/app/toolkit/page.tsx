@@ -1,13 +1,14 @@
 'use client';
 import React from 'react';
 import { Sparkles, MessageSquare, BookOpen, PenTool, BrainCircuit } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ToolkitPage() {
   const tools = [
-    { title: 'Question Generator', icon: MessageSquare, desc: 'Generate diverse questions based on a topic or syllabus.', color: 'text-blue-500', bg: 'bg-blue-50' },
-    { title: 'Rubric Creator', icon: BookOpen, desc: 'Automatically create detailed grading rubrics.', color: 'text-green-500', bg: 'bg-green-50' },
-    { title: 'Essay Grader', icon: PenTool, desc: 'AI-assisted grading for long-form essays.', color: 'text-purple-500', bg: 'bg-purple-50' },
-    { title: 'Lesson Planner', icon: BrainCircuit, desc: 'Generate structured lesson plans instantly.', color: 'text-orange-500', bg: 'bg-orange-50' },
+    { title: 'Question Generator', href: '/toolkit/question-generator', icon: MessageSquare, desc: 'Generate diverse questions based on a topic or syllabus.', color: 'text-blue-500', bg: 'bg-blue-50' },
+    { title: 'Rubric Creator', href: '/toolkit/rubric-creator', icon: BookOpen, desc: 'Automatically create detailed grading rubrics.', color: 'text-green-500', bg: 'bg-green-50' },
+    { title: 'Essay Grader', href: '/toolkit/essay-grader', icon: PenTool, desc: 'AI-assisted grading for long-form essays.', color: 'text-purple-500', bg: 'bg-purple-50' },
+    { title: 'Lesson Planner', href: '/toolkit/lesson-planner', icon: BrainCircuit, desc: 'Generate structured lesson plans instantly.', color: 'text-orange-500', bg: 'bg-orange-50' },
   ];
 
   return (
@@ -24,13 +25,13 @@ export default function ToolkitPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {tools.map((tool, idx) => (
-          <div key={idx} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer">
+          <Link href={tool.href} key={idx} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer block">
             <div className={`w-14 h-14 ${tool.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
               <tool.icon className={`w-7 h-7 ${tool.color}`} />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">{tool.title}</h3>
             <p className="text-gray-500">{tool.desc}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
