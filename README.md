@@ -1,4 +1,4 @@
-VedaAI Assessment Creator
+## VedaAI Assessment Creator
 
 A modern, full-stack AI application for generating custom examination papers, grading essays, and managing classrooms with real-time generation status tracking. Built with React, Next.js, Node.js, Express, MongoDB, and Redis.
 
