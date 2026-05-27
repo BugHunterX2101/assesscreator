@@ -188,7 +188,7 @@ export const AssignmentForm: React.FC = () => {
             Additional Information (For better output)
           </label>
           <textarea
-            className="w-full p-4 bg-gray-50/50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-200 resize-none h-24 placeholder-gray-400"
+            className="w-full p-4 bg-gray-50/50 border border-gray-200 rounded-2xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-200 resize-none h-24 placeholder-gray-400"
             value={form.instructions}
             onChange={(e) => updateForm({ instructions: e.target.value })}
             placeholder="e.g Generate a question paper for 3 hour exam duration..."

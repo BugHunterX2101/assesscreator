@@ -187,14 +187,14 @@ export default function GroupsPage() {
                   value={newGroupName}
                   onChange={(e) => setNewGroupName(e.target.value)}
                   placeholder="e.g. Class 10-A Science"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all text-gray-900 placeholder-gray-400"
                   autoFocus
                 />
               </div>
               <button 
                 type="submit" 
                 disabled={!newGroupName.trim() || isSubmitting}
-                className="w-full bg-[#2A2B2D] hover:bg-black disabled:bg-gray-300 text-white font-medium py-3 rounded-xl transition-colors flex justify-center items-center"
+                className="w-full bg-[#2A2B2D] hover:bg-black disabled:bg-gray-200 disabled:text-gray-400 text-white font-medium py-3 rounded-xl transition-colors flex justify-center items-center"
               >
                 {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Create Group'}
               </button>
@@ -221,14 +221,14 @@ export default function GroupsPage() {
                   value={newStudentName}
                   onChange={(e) => setNewStudentName(e.target.value)}
                   placeholder="e.g. Alice Smith"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all text-gray-900 placeholder-gray-400"
                   autoFocus
                 />
               </div>
               <button 
                 type="submit" 
                 disabled={!newStudentName.trim() || isSubmitting}
-                className="w-full bg-[#2A2B2D] hover:bg-black disabled:bg-gray-300 text-white font-medium py-3 rounded-xl transition-colors flex justify-center items-center"
+                className="w-full bg-[#2A2B2D] hover:bg-black disabled:bg-gray-200 disabled:text-gray-400 text-white font-medium py-3 rounded-xl transition-colors flex justify-center items-center"
               >
                 {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Add Student'}
               </button>
