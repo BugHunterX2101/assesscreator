@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+export interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> {
   label: string;
   error?: string;
   as?: 'input' | 'textarea' | 'select';
@@ -8,28 +8,35 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HT
 }
 
 export const FormField: React.FC<FormFieldProps> = ({ label, error, as = 'input', options, className, ...props }) => {
-  const baseClasses = "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:bg-gray-50 disabled:text-gray-500";
-  
+  const inputClasses = `
+    block w-full text-sm font-semibold text-gray-900 placeholder-gray-400
+    ${as === 'select' ? 'h-12 px-4' : 'h-12 px-4'}
+    bg-gray-50/50 border ${error ? 'border-red-300' : 'border-gray-200'}
+    rounded-[1rem] focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500
+    transition-colors ${className || ''}
+  `;
+
   return (
-    <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700 mb-1">
+    <div className="w-full">
+      <label className="block text-sm font-bold text-gray-900 mb-2">
         {label}
       </label>
-      {as === 'input' && (
-        <input className={`${baseClasses} ${className}`} {...(props as React.InputHTMLAttributes<HTMLInputElement>)} />
-      )}
-      {as === 'textarea' && (
-        <textarea className={`${baseClasses} ${className}`} rows={4} {...(props as React.InputHTMLAttributes<HTMLTextAreaElement>)} />
-      )}
-      {as === 'select' && (
-        <select className={`${baseClasses} ${className}`} {...(props as React.SelectHTMLAttributes<HTMLSelectElement>)}>
-          <option value="" disabled>Select an option</option>
-          {options?.map(opt => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
-      )}
-      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+      <div className="relative">
+        {as === 'select' ? (
+          <select className={inputClasses} {...(props as any)}>
+            {options?.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        ) : as === 'textarea' ? (
+          <textarea className={`${inputClasses} py-3 h-auto min-h-[100px]`} {...(props as any)} />
+        ) : (
+          <input className={inputClasses} {...(props as any)} />
+        )}
+      </div>
+      {error && <p className="mt-1 text-sm text-red-600 font-medium">{error}</p>}
     </div>
   );
 };

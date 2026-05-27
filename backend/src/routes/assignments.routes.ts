@@ -79,4 +79,14 @@ router.post('/:id/regenerate', async (req: Request, res: Response) => {
   }
 });
 
+// Get all assignments
+router.get('/', async (req, res) => {
+  try {
+    const assignments = await Assignment.find().sort({ createdAt: -1 });
+    res.json({ assignments });
+  } catch (error: any) {
+    res.status(500).json({ error: { message: error.message } });
+  }
+});
+
 export default router;

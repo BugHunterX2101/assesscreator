@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { UploadCloud, CheckCircle, Loader2 } from 'lucide-react';
 import axios from 'axios';
-import { UploadCloud, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
 interface Props {
   onUploadSuccess: (fileKey: string) => void;
@@ -8,15 +8,15 @@ interface Props {
 
 export const FileUploader: React.FC<Props> = ({ onUploadSuccess }) => {
   const [isUploading, setIsUploading] = useState(false);
-  const [fileName, setFileName] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      setError('File must be less than 5MB');
+    if (file.size > 10 * 1024 * 1024) {
+      setError('File size must be less than 10MB');
       return;
     }
 
@@ -34,50 +34,45 @@ export const FileUploader: React.FC<Props> = ({ onUploadSuccess }) => {
       setFileName(file.name);
       onUploadSuccess(res.data.fileKey);
     } catch (err: any) {
-      setError(err.response?.data?.error?.message || 'Failed to upload file');
+      setError(err.response?.data?.error || 'Upload failed');
     } finally {
       setIsUploading(false);
     }
   };
 
   return (
-    <div className="mb-6">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        Reference Material (Optional)
-      </label>
-      
-      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-indigo-500 transition-colors bg-white">
-        <div className="space-y-1 text-center">
-          {isUploading ? (
-            <Loader2 className="mx-auto h-12 w-12 text-indigo-500 animate-spin" />
-          ) : fileName ? (
-            <CheckCircle className="mx-auto h-12 w-12 text-green-500" />
-          ) : (
-            <UploadCloud className="mx-auto h-12 w-12 text-gray-400" />
-          )}
-          
-          <div className="flex text-sm text-gray-600 justify-center">
-            {fileName ? (
-              <span className="font-medium text-indigo-600">{fileName}</span>
-            ) : (
-              <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                <span>Upload a file</span>
-                <input id="file-upload" name="file-upload" type="file" className="sr-only" accept=".pdf,.txt" onChange={handleFileChange} disabled={isUploading} />
-              </label>
-            )}
-            {!fileName && <p className="pl-1">or drag and drop</p>}
-          </div>
-          <p className="text-xs text-gray-500">
-            PDF or TXT up to 5MB
-          </p>
+    <div className="w-full">
+      <label 
+        htmlFor="file-upload"
+        className="border-2 border-dashed rounded-[2rem] p-8 flex flex-col items-center justify-center transition-colors cursor-pointer text-center border-gray-200 hover:border-gray-300 hover:bg-gray-50/50 block w-full bg-white relative"
+      >
+        <input id="file-upload" type="file" className="sr-only" onChange={handleFileChange} disabled={isUploading} accept=".pdf,.txt,.png,.jpg,.jpeg" />
+        
+        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.06)] border border-gray-100 mb-4 text-gray-700">
+           <UploadCloud className="w-5 h-5" />
         </div>
-      </div>
-      {error && (
-        <p className="mt-2 text-sm text-red-600 flex items-center">
-          <AlertCircle className="w-4 h-4 mr-1" />
-          {error}
-        </p>
-      )}
+        <p className="text-[15px] font-bold text-gray-900 mb-1">Choose a file or drag & drop it here</p>
+        <p className="text-[11px] font-semibold text-gray-400 mb-6 tracking-wide">JPEG, PNG, upto 10MB</p>
+        
+        <div className="bg-white border border-gray-200 text-gray-600 text-xs font-bold px-6 py-2.5 rounded-full hover:bg-gray-50 transition-colors shadow-sm">
+          Browse Files
+        </div>
+
+        {isUploading && (
+          <div className="mt-6 flex items-center text-sm text-orange-600 font-medium bg-orange-50 px-4 py-2 rounded-full">
+            <Loader2 className="animate-spin mr-2 h-4 w-4" />
+            Uploading...
+          </div>
+        )}
+        
+        {fileName && !isUploading && (
+          <div className="mt-6 flex items-center text-sm text-green-600 font-medium bg-green-50 px-4 py-2 rounded-full">
+            <CheckCircle className="mr-2 h-4 w-4" />
+            {fileName}
+          </div>
+        )}
+      </label>
+      {error && <p className="mt-2 text-sm text-red-600 text-center">{error}</p>}
     </div>
   );
 };

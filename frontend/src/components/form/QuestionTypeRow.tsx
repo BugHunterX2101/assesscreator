@@ -1,60 +1,75 @@
 import React from 'react';
-import { FormField } from './FormField';
-import { QuestionTypeConfig } from '@vedaai/shared';
 
-interface Props {
+interface QuestionTypeRowProps {
   index: number;
-  config: QuestionTypeConfig;
-  onChange: (index: number, field: keyof QuestionTypeConfig, value: any) => void;
+  config: {
+    type: string;
+    count: number;
+    marksEach: number;
+  };
+  onChange: (index: number, field: string, value: any) => void;
   onRemove: (index: number) => void;
 }
 
-export const QuestionTypeRow: React.FC<Props> = ({ index, config, onChange, onRemove }) => {
+const QUESTION_TYPES = [
+  { value: 'MultipleChoice', label: 'Multiple Choice Questions' },
+  { value: 'ShortAnswer', label: 'Short Questions' },
+  { value: 'LongAnswer', label: 'Long Answer Questions' },
+  { value: 'TrueFalse', label: 'True / False Questions' },
+  { value: 'DiagramBased', label: 'Diagram/Graph-Based Questions' },
+  { value: 'Numerical', label: 'Numerical Problems' }
+];
+
+export const QuestionTypeRow: React.FC<QuestionTypeRowProps> = ({ index, config, onChange, onRemove }) => {
+  
+  const handleCountChange = (delta: number) => {
+    const newVal = Math.max(1, config.count + delta);
+    onChange(index, 'count', newVal);
+  };
+
+  const handleMarksChange = (delta: number) => {
+    const newVal = Math.max(1, config.marksEach + delta);
+    onChange(index, 'marksEach', newVal);
+  };
+
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-end mb-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
-      <div className="flex-1 w-full">
-        <FormField
-          label="Question Type"
-          as="select"
+    <div className="flex items-center space-x-4 bg-gray-50/50 p-3 rounded-2xl border border-gray-100">
+      <div className="flex-1 relative">
+        <select
           value={config.type}
           onChange={(e) => onChange(index, 'type', e.target.value)}
-          options={[
-            { value: 'MCQ', label: 'Multiple Choice (MCQ)' },
-            { value: 'ShortAnswer', label: 'Short Answer' },
-            { value: 'LongAnswer', label: 'Long Answer' },
-            { value: 'TrueFalse', label: 'True / False' },
-            { value: 'FillBlank', label: 'Fill in the Blank' }
-          ]}
-        />
+          className="w-full bg-white border border-gray-200 text-gray-700 text-sm font-semibold rounded-full px-4 py-2.5 appearance-none focus:outline-none focus:ring-2 focus:ring-orange-500/20 pr-10"
+        >
+          {QUESTION_TYPES.map(qt => (
+            <option key={qt.value} value={qt.value}>{qt.label}</option>
+          ))}
+        </select>
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+          <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+        </div>
       </div>
-      <div className="w-full sm:w-32">
-        <FormField
-          label="Count"
-          type="number"
-          min="1"
-          value={config.count}
-          onChange={(e) => onChange(index, 'count', parseInt(e.target.value))}
-        />
-      </div>
-      <div className="w-full sm:w-32">
-        <FormField
-          label="Marks Each"
-          type="number"
-          min="1"
-          value={config.marksEach}
-          onChange={(e) => onChange(index, 'marksEach', parseInt(e.target.value))}
-        />
-      </div>
-      <button
-        type="button"
+      
+      <button 
+        type="button" 
         onClick={() => onRemove(index)}
-        className="mb-4 text-red-500 hover:text-red-700 p-2"
-        title="Remove"
+        className="text-gray-400 hover:text-gray-600 font-medium px-2"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-        </svg>
+        ×
       </button>
+
+      <div className="flex items-center space-x-6">
+        <div className="flex items-center bg-white border border-gray-200 rounded-full p-1 shadow-sm h-10 w-28">
+          <button type="button" onClick={() => handleCountChange(-1)} className="w-8 h-full flex items-center justify-center text-gray-400 hover:text-gray-600">−</button>
+          <span className="flex-1 text-center text-sm font-bold text-gray-900">{config.count}</span>
+          <button type="button" onClick={() => handleCountChange(1)} className="w-8 h-full flex items-center justify-center text-gray-400 hover:text-gray-600">+</button>
+        </div>
+
+        <div className="flex items-center bg-white border border-gray-200 rounded-full p-1 shadow-sm h-10 w-28">
+          <button type="button" onClick={() => handleMarksChange(-1)} className="w-8 h-full flex items-center justify-center text-gray-400 hover:text-gray-600">−</button>
+          <span className="flex-1 text-center text-sm font-bold text-gray-900">{config.marksEach}</span>
+          <button type="button" onClick={() => handleMarksChange(1)} className="w-8 h-full flex items-center justify-center text-gray-400 hover:text-gray-600">+</button>
+        </div>
+      </div>
     </div>
   );
 };

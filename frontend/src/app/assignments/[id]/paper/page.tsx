@@ -60,10 +60,10 @@ export default function PaperPage({ params }: { params: Promise<{ id: string }> 
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 pb-12 print:bg-white print:pb-0">
+    <div className="pb-12 print:bg-white print:pb-0">
       <ActionBar assignmentId={assignmentId} />
       
-      <main className="max-w-[210mm] mx-auto mt-8 bg-white shadow-2xl print:shadow-none print:mt-0 px-10 py-12 min-h-[297mm] rounded-sm print:rounded-none">
+      <main className="max-w-[210mm] mx-auto mt-4 bg-white shadow-[0_4px_24px_rgba(0,0,0,0.06)] print:shadow-none print:mt-0 px-12 py-16 min-h-[297mm] rounded-[2rem] print:rounded-none">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
