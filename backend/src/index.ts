@@ -18,6 +18,9 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
+// Trust proxy for rate limiting behind reverse proxies (like HF Spaces / Next.js)
+app.set('trust proxy', 1);
+
 // Connect to DB
 connectDB();
 
